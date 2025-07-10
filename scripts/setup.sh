@@ -22,9 +22,6 @@ sudo pacman -S --noconfirm \
     tree-sitter fd man-db tree pavucontrol \
     tmux
 
-mkdir -p ~/.config/tmux/plugins/catppuccin
-git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
-
 echo "[3/5] Cloning dotfiles..."
 chezmoi init "$DOTFILES_REPO"
 

@@ -48,20 +48,13 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# Catppuccin fzf theme
+# Nord fzf theme
 export FZF_DEFAULT_OPTS=" \
---color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
---color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
---color=marker:#babbf1,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284 \
---color=selected-bg:#51576d \
---color=border:#414559,label:#c6d0f5"
+--color=bg+:#4C566A,bg:#2E3440,spinner:#ECEFF4,hl:#81A1C1 \
+--color=fg:#D8DEE9,header:#81A1C1,info:#88C0D0,pointer:#ECEFF4 \
+--color=marker:#8FBCBB,fg+:#D8DEE9,prompt:#88C0D0,hl+:#81A1C1 \
+--color=selected-bg:#3B4252 \
+--color=border:#4C566A,label:#D8DEE9"
 
 # Aliases
 alias ls='ls --color'

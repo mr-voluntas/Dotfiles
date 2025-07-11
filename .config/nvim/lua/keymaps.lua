@@ -11,6 +11,11 @@ map("n", "<leader>v", function()
     vim.cmd(":vsplit")
 end)
 
+-- horizontal split
+map("n", "<leader>b", function()
+    vim.cmd(":split")
+end)
+
 -- Resize bigger vertically
 map("n", "<C-up>", function()
     vim.cmd(":resize +2")
@@ -45,3 +50,7 @@ map("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 map("n", "<leader>sc", function()
     require('telescope.builtin').find_files({ cwd = "~/dotfiles/", hidden = true })
 end, { desc = "Edit init.lua" })
+
+
+
+vim.keymap.set("n", "<leader>ot", vim.cmd.OpenTrackage, { desc = "show trackage data", silent = true})

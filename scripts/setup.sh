@@ -17,7 +17,7 @@ echo "[2/5] Installing packages..."
 sudo pacman -S --noconfirm \
     ttf-jetbrains-mono-nerd kitty hyprland \
     nvim openssh firefox wl-clipboard git \
-    chezmoi zsh ripgrep fzf zoxide starship \
+    stow zsh ripgrep fzf zoxide starship \
     unzip luarocks cmake make wget \
     tree-sitter fd man-db tree pavucontrol \
     tmux

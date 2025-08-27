@@ -9,9 +9,9 @@ return {
       vim.cmd 'lua require("neotest").run.run(vim.loop.cwd())'
     end, { desc = "Neotest | Run All Test Files", silent = true })
 
-    -- vim.keymap.set("n", "<leader>Tr", function()
-    --   vim.cmd 'lua require("neotest").run.run()'
-    -- end, { desc = "Neotest | Run Nearest", silent = true })
+    vim.keymap.set("n", "<leader>tn", function()
+      vim.cmd 'lua require("neotest").run.run()'
+    end, { desc = "Neotest | Run Nearest", silent = true })
 
     -- vim.keymap.set("n", "<leader>Td", function()
     --   vim.cmd 'lua require("neotest").run.run { strategy = "dap" }'
@@ -38,17 +38,17 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "nvim-neotest/nvim-nio",
     "nvim-lua/plenary.nvim",
-    {
-      "fredrikaverpil/neotest-golang", -- Installation
-      dependencies = {
-        {
-          "leoluz/nvim-dap-go",
-          init = function()
-            require("dap-go").setup()
-          end,
-        },
-      },
-    },
+    -- {
+    --   "fredrikaverpil/neotest-golang", -- Installation
+    --   dependencies = {
+    --     {
+    --       "leoluz/nvim-dap-go",
+    --       init = function()
+    --         require("dap-go").setup()
+    --       end,
+    --     },
+    --   },
+    -- },
   },
   config = function()
     require("neotest").setup {
@@ -56,7 +56,7 @@ return {
         require "neotest-python" {
           runner = "pytest",
         },
-        require "neotest-golang", -- Registration
+        -- require "neotest-golang", -- Registration
       },
     }
   end,

@@ -1,102 +1,180 @@
-local merge_tables = require("utils").merge_tables
-
-local exist, custom = pcall(require, "custom")
-local custom_formatting_servers = exist and type(custom) == "table" and custom.formatting_servers or {}
-local formatting_servers = {
-    pyright = {},
-    lua_ls = {
-        settings = {
-            Lua = {
-                diagnostics = {
-                    globals = { "vim" },
-                },
-                workspace = {
-                    library = vim.api.nvim_get_runtime_file("", true),
-                    checkThirdParty = false,
-                },
-                telemetry = {
-                    enable = false,
-                },
-            },
+return {
+    {
+        "neovim/nvim-lspconfig",
+        lazy = false,
+        dependencies = {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            "hrsh7th/cmp-nvim-lsp",
         },
+        config = function()
+            local lspconfig = require("lspconfig")
+            local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+            -- Capabilities (for nvim-cmp)
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                {},
+                vim.lsp.protocol.make_client_capabilities(),
+                cmp_nvim_lsp.default_capabilities()
+            )
+
+            -- on_attach for keymaps, format-on-save
+            local on_attach = function(client, bufnr)
+                local map = function(mode, lhs, rhs, desc)
+                    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+                end
+
+                map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+                map("n", "<leader>ld", vim.lsp.buf.definition, "Go to Definition")
+                map("n", "<leader>li", vim.lsp.buf.diagnostics.hover, "Hover Diagnostics")
+                map("n", "<leader>lr", vim.lsp.buf.references, "Find References")
+                map("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
+                map("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "Format File")
+                map("n", "<leader>ln", vim.lsp.buf.rename, "Rename Symbol")
+
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.format({ bufnr = bufnr })
+                    end,
+                })
+            end
+
+            -- Mason setup
+            require("mason").setup({
+                ui = {
+                    icons = {
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗",
+                    },
+                },
+            })
+
+            -- Mason-lspconfig (installs & sets up servers)
+            require("mason-lspconfig").setup({
+                ensure_installed = { "lua_ls", "pyright", "gopls" },
+                handlers = {
+                    function(server_name)
+                        lspconfig[server_name].setup({
+                            capabilities = capabilities,
+                            on_attach = on_attach,
+                        })
+                    end,
+                    ["lua_ls"] = function()
+                        lspconfig.lua_ls.setup({
+                            capabilities = capabilities,
+                            on_attach = on_attach,
+                            settings = {
+                                Lua = {
+                                    runtime = { version = "LuaJIT" },
+                                    diagnostics = { globals = { "vim" } },
+                                    workspace = {
+                                        library = vim.api.nvim_get_runtime_file("", true),
+                                        checkThirdParty = false,
+                                    },
+                                    telemetry = { enable = false },
+                                },
+                            },
+                        })
+                    end,
+                },
+            })
+
+            -- Mason-tool-installer (formatters, linters, etc.)
+            require("mason-tool-installer").setup({
+                ensure_installed = {
+                    "prettier", -- JS/TS formatter
+                    "stylua",   -- Lua formatter
+                    "isort",    -- Python imports
+                    "black",    -- Python formatter
+                    "pylint",   -- Python linter
+                },
+            })
+        end,
     },
-}
 
--- Merge
-merge_tables(formatting_servers, custom_formatting_servers)
-
-local opts = {
-    -- Automatically format on save
-    autoformat = true,
-    -- options for vim.lsp.buf.format
-    -- `bufnr` and `filter` is handled by the LazyVim formatter,
-    -- but can be also overridden when specified
-    format = {
-        formatting_options = nil,
-        timeout_ms = nil,
+    -- None-ls (formatters & linters)
+    {
+        "nvimtools/none-ls.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            local null_ls = require("null-ls")
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.formatting.black,
+                    null_ls.builtins.formatting.isort,
+                    null_ls.builtins.formatting.prettier,
+                    -- null_ls.builtins.diagnostics.ruff,
+                },
+            })
+        end,
     },
-    -- LSP Server Settings
-    servers = formatting_servers,
-    -- you can do any additional lsp server setup here
-    -- return true if you don"t want this server to be setup with lspconfig
-    setup = {
-        -- example to setup with typescript.nvim
-        -- tsserver = function(_, opts)
-        --   require("typescript").setup({ server = opts })
-        --   return true
-        -- end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
+
+    -- Completion
+    { "hrsh7th/cmp-nvim-lsp" },
+
+    {
+        "L3MON4D3/LuaSnip",
+        dependencies = {
+            "saadparwaiz1/cmp_luasnip",
+            "rafamadriz/friendly-snippets",
+        },
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+        end,
     },
-}
 
-local servers = opts.servers
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    {
+        "hrsh7th/nvim-cmp",
+        version = false,
+        dependencies = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+        },
+        config = function()
+            local cmp = require("cmp")
+            local luasnip = require("luasnip")
 
-local function setup(server)
-    local server_opts = vim.tbl_deep_extend("force", {
-        capabilities = vim.deepcopy(capabilities),
-    }, servers[server] or {})
-
-    if opts.setup[server] then
-        if opts.setup[server](server, server_opts) then return end
-    elseif opts.setup["*"] then
-        if opts.setup["*"](server, server_opts) then return end
-    end
-    require("lspconfig")[server].setup(server_opts)
-end
-
-local mlsp = require "mason-lspconfig"
-local available = {}
-do
-    local ok, result = pcall(mlsp.get_available_servers)
-    if ok then
-        available = result
-    else
-        vim.schedule(function()
-            vim.notify("[mason-lspconfig] Failed to get available servers: " .. tostring(result), vim.log.levels.WARN)
-        end)
-        available = {}
-    end
-end
-
-local ensure_installed = {} ---@type string[]
-for server, server_opts in pairs(servers) do
-    if server_opts then
-        server_opts = server_opts == true and {} or server_opts
-        -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-        if server_opts.mason == false or not vim.tbl_contains(available, server) then
-            setup(server)
-        else
-            ensure_installed[#ensure_installed + 1] = server
-        end
-    end
-end
-
-require("mason").setup()
-require("mason-lspconfig").setup {
-    ensure_installed = ensure_installed,
-    automatic_installation = true,
-    -- Whether installed servers should automatically be enabled via `:h vim.lsp.enable()`.
-    automatic_enable = true,
+            cmp.setup({
+                snippet = {
+                    expand = function(args) luasnip.lsp_expand(args.body) end,
+                },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    ["<C-k>"] = cmp.mapping(function(fallback)
+                        if luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                    ["<C-j>"] = cmp.mapping(function(fallback)
+                        if luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                }),
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp" },
+                    { name = "luasnip" },
+                    { name = "path" },
+                }, {
+                    { name = "buffer" },
+                }),
+            })
+        end,
+    },
 }

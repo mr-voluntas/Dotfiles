@@ -1,13 +1,7 @@
 return {
-  "gbprod/nord.nvim",
-  lazy = false,
-  priority = 1000,
-  config = function()
-    local ok, nord = pcall(require, "nord")
-    if ok and nord and type(nord.setup) == "function" then
-      nord.setup({})
-    end
-    vim.cmd.colorscheme("nord")
-  end,
+    "kvrohit/rasmus.nvim",
+    priority = 1000,
+    config = function()
+        vim.cmd([[colorscheme rasmus]])
+    end,
 }
-

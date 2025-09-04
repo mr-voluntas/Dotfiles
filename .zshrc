@@ -10,7 +10,7 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-export PATH="$HOME/.emacs.d/bin:$PATH"
+export PATH="$HOME/.config/emacs/bin:$HOME/go/bin:$PATH"
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting

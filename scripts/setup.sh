@@ -16,14 +16,14 @@ sudo pacman -Syu --noconfirm
 echo "[2/5] Installing packages..."
 sudo pacman -S --noconfirm \
     ttf-jetbrains-mono-nerd kitty hyprland \
-    nvim openssh firefox wl-clipboard git \
-    stow zsh ripgrep fzf zoxide starship \
-    unzip luarocks cmake make wget \
-    tree-sitter fd man-db tree pavucontrol \
-    tmux
+    openssh firefox wl-clipboard git \
+    stow zsh emacs-wayland ripgrep fzf zoxide starship \
+    unzip cmake make wget \
+    fd man-db tree pavucontrol \
 
-echo "[3/5] Cloning dotfiles..."
-chezmoi init "$DOTFILES_REPO"
+echo "[3/5] Installing doom emacs..."
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
 
 echo "[4/5] Setting default shell to zsh..."
 if [[ "$SHELL" != "/bin/zsh" ]]; then

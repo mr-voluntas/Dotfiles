@@ -53,8 +53,7 @@ return {
       extensions = {
         project = {
           base_dirs = {
-            "~/projects",
-            { "~/sandbox", max_depth = 2 },
+            -- "~/projects",
           },
           hidden_files = true,
           theme = "ivy",

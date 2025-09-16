@@ -58,9 +58,8 @@ export FZF_DEFAULT_OPTS=" \
 
 # Aliases
 alias ls='ls --color'
-alias v='nvim'
-alias c='clear'
-alias battery="echo $(cat /sys/class/power_supply/BAT0/capacity)%"
+alias sleep='systemctl sleep'
+alias pdf='xdg-open'
 
 # Shell integrations
 eval "$(fzf --zsh)"

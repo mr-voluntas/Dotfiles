@@ -55,7 +55,7 @@ return {
 
             -- Mason-lspconfig (installs & sets up servers)
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "pyright", "gopls" },
+                ensure_installed = { "lua_ls", "gopls" },
                 handlers = {
                     function(server_name)
                         lspconfig[server_name].setup({
@@ -86,11 +86,8 @@ return {
             -- Mason-tool-installer (formatters, linters, etc.)
             require("mason-tool-installer").setup({
                 ensure_installed = {
-                    "prettier", -- JS/TS formatter
                     "stylua",   -- Lua formatter
-                    "isort",    -- Python imports
-                    "black",    -- Python formatter
-                    "pylint",   -- Python linter
+                    "gopls",
                 },
             })
         end,
@@ -104,10 +101,7 @@ return {
             local null_ls = require("null-ls")
             null_ls.setup({
                 sources = {
-                    null_ls.builtins.formatting.black,
-                    null_ls.builtins.formatting.isort,
-                    null_ls.builtins.formatting.prettier,
-                    -- null_ls.builtins.diagnostics.ruff,
+                    null_ls.builtins.formatting.gopls,
                 },
             })
         end,

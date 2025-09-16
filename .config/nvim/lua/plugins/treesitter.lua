@@ -11,7 +11,6 @@ return {
                     "json",
                     "yaml",
                     "lua",
-                    "python",
 
                 },
                 highlight = { enable = true },

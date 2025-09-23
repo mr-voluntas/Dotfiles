@@ -1,67 +1,67 @@
-# Set the directory we want to store zinit and plugins
+# -----------------------------
+# Zinit & Plugins
+# -----------------------------
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Download Zinit, if it's not there yet
+# Install Zinit if missing
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-# Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-export PATH="$HOME/.config/emacs/bin:$HOME/go/bin:$PATH"
-
-# Add in zsh plugins
+# Load plugins
 zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
-zinit ice depth=1
-
-# Add in snippets
 zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::command-not-found
 
-# Load completions
 autoload -Uz compinit && compinit
 
-zinit cdreplay -q
+# -----------------------------
+# Prompt
+# -----------------------------
+autoload -Uz vcs_info
+setopt prompt_subst
 
+# Update prompt function
+update_prompt() {
+  precmd() { vcs_info }
+  zstyle ':vcs_info:git:*' formats '%F{cyan}(%b)%f'
+  PROMPT='%F{green}%~%f ${vcs_info_msg_0_}: '
+}
+
+# Initialize prompt immediately
+update_prompt
+
+# -----------------------------
 # Keybindings
+# -----------------------------
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
+# -----------------------------
 # History
+# -----------------------------
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
 
-# Nord fzf theme
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#4C566A,bg:#2E3440,spinner:#ECEFF4,hl:#81A1C1 \
---color=fg:#D8DEE9,header:#81A1C1,info:#88C0D0,pointer:#ECEFF4 \
---color=marker:#8FBCBB,fg+:#D8DEE9,prompt:#88C0D0,hl+:#81A1C1 \
---color=selected-bg:#3B4252 \
---color=border:#4C566A,label:#D8DEE9"
-
+# -----------------------------
 # Aliases
+# -----------------------------
 alias ls='ls --color'
-alias sleep='systemctl sleep'
 alias pdf='xdg-open'
+alias sleep='systemctl suspend'
 
-# Shell integrations
+# -----------------------------
+# FZF & Zoxide
+# -----------------------------
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-eval "$(starship init zsh)"

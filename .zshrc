@@ -1,4 +1,5 @@
 export PATH="$HOME/.config/emacs/bin:$PATH"
+export DOOMDIR="$HOME/.config/doom"
 
 # -----------------------------
 # Zinit & Plugins

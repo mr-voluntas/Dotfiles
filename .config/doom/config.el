@@ -33,7 +33,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
-(setq doom-theme 'rasmus)
+(setq doom-theme 'doom-opera)
 
 ;; Set the default font
 (setq doom-font (font-spec :family "JetBrainsMono NL Nerd Font" :size 24))
@@ -79,3 +79,4 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+

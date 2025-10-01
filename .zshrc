@@ -1,6 +1,9 @@
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export DOOMDIR="$HOME/.config/doom"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/share/nvm/init-nvm.sh" ] && \. "/usr/share/nvm/init-nvm.sh"
+#
 # -----------------------------
 # Zinit & Plugins
 # -----------------------------
@@ -68,3 +71,7 @@ alias sleep='systemctl suspend'
 # -----------------------------
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/voluntas/.sdkman"
+[[ -s "/home/voluntas/.sdkman/bin/sdkman-init.sh" ]] && source "/home/voluntas/.sdkman/bin/sdkman-init.sh"

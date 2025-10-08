@@ -65,6 +65,7 @@ setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_sa
 alias ls='ls --color'
 alias pdf='xdg-open'
 alias sleep='systemctl suspend'
+alias battery='echo "Battery: $(cat /sys/class/power_supply/BAT0/capacity)%"'
 
 # -----------------------------
 # FZF & Zoxide

@@ -31,12 +31,12 @@ rm -rf JetBrainsMono.zip
 fc-cache -fv
 
 echo "[5/5] Setting up dotfiles..."
-ln -sf ~/dotfiles/.zshrc ~/.zshrc
-ln -sf ~/dotfiles/.zprofile ~/.zprofile
-ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
-ln -sf ~/dotfiles/.config/hypr ~/.config
-ln -sf ~/dotfiles/.config/kitty ~/.config
-ln -sf ~/dotfiles/.config/nvim ~/.config
+ln -sf ~/Dotfiles/.zshrc ~/.zshrc
+ln -sf ~/Dotfiles/.zprofile ~/.zprofile
+ln -sf ~/Dotfiles/.gitconfig ~/.gitconfig
+ln -sf ~/Dotfiles/.config/hypr ~/.config/hypr
+ln -sf ~/Dotfiles/.config/kitty ~/.config/kitty
+ln -sf ~/Dotfiles/.config/doom ~/.config/doom
 
 echo "Setup complete..."
 hyprctl dispatch exit

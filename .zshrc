@@ -1,9 +1,6 @@
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export DOOMDIR="$HOME/.config/doom"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/share/nvm/init-nvm.sh" ] && \. "/usr/share/nvm/init-nvm.sh"
-
 # -----------------------------
 # Zinit & Plugins
 # -----------------------------
@@ -65,7 +62,6 @@ setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_sa
 alias ls='ls --color'
 alias sleep='systemctl suspend'
 alias dooms='pkill -f "emacs --daemon" && doom sync && emacs --daemon'
-alias battery='echo "Battery: $(cat /sys/class/power_supply/BAT0/capacity)%"'
 
 # -----------------------------
 # FZF & Zoxide
@@ -73,6 +69,3 @@ alias battery='echo "Battery: $(cat /sys/class/power_supply/BAT0/capacity)%"'
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/voluntas/.sdkman"
-[[ -s "/home/voluntas/.sdkman/bin/sdkman-init.sh" ]] && source "/home/voluntas/.sdkman/bin/sdkman-init.sh"

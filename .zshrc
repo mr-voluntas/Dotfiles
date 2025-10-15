@@ -3,7 +3,7 @@ export DOOMDIR="$HOME/.config/doom"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/share/nvm/init-nvm.sh" ] && \. "/usr/share/nvm/init-nvm.sh"
-#
+
 # -----------------------------
 # Zinit & Plugins
 # -----------------------------
@@ -63,8 +63,8 @@ setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_sa
 # Aliases
 # -----------------------------
 alias ls='ls --color'
-alias pdf='xdg-open'
 alias sleep='systemctl suspend'
+alias dooms='pkill -f "emacs --daemon" && doom sync && emacs --daemon'
 alias battery='echo "Battery: $(cat /sys/class/power_supply/BAT0/capacity)%"'
 
 # -----------------------------

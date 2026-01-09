@@ -62,17 +62,19 @@
 ;; Ensure LSP starts automatically for C/C++
 (after! cc-mode
   (add-hook 'c-mode-hook #'lsp)
-  (add-hook 'c++-mode-hook #'lsp))
 
+  ;; Move between windows using Ctrl + j / k
+  (map! :n "C-j" #'windmove-down)
+  (map! :n "C-k" #'windmove-up)
+  (map! :n "C-h" #'windmove-left)
+  (map! :n "C-l" #'windmove-right)
 
-;; Move between windows using Ctrl + j / k
-(map! :n "C-j" #'windmove-down)
-(map! :n "C-k" #'windmove-up)
+  (setq deft-directory "~/notes")
+  (setq deft-recursive t)
+  (setq deft-default-extension "md")
+  (setq deft-extensions '("md"))
+  )
 
-(setq deft-directory "~/notes")
-(setq deft-recursive t)
-(setq deft-default-extension "md")
-(setq deft-extensions '("md"))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.

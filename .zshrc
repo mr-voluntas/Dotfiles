@@ -62,6 +62,8 @@ setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_sa
 alias ls='ls --color'
 alias sleep='systemctl suspend'
 alias dooms='pkill -f "emacs --daemon" && doom sync && emacs --daemon'
+alias volu='pactl set-sink-volume @DEFAULT_SINK@ +10%'
+alias vold='pactl set-sink-volume @DEFAULT_SINK@ -10%'
 
 # -----------------------------
 # FZF & Zoxide

@@ -7,7 +7,7 @@ echo "[2/5] Installing packages..."
 pacman -S --noconfirm \
     zsh git zoxide \
     wl-clipboard ripgrep \
-    fzf fd tree man-db ncurses\
+    fzf fd tree man-db ncurses kitty-terminfo\
 
 echo "[3/5] Setting default shell to zsh..."
 if [[ "$SHELL" != "/bin/zsh" ]]; then

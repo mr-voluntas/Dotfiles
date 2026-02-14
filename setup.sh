@@ -10,14 +10,15 @@ pacman -S --noconfirm \
     fzf fd tree man-db ncurses kitty-terminfo\
 
 echo "[3/5] Installing NVIM 0.12..."
-# 1. Install dependencies
-pacman -S --noconfirm curl tar fuse2
-# 2. Download with -L to follow redirects
-curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
-# 3. Extract and move to /usr/local
-tar -C /usr/local --strip-components 1 -xzf nvim-linux64.tar.gz
-# 4. Cleanup
-rm nvim-linux64.tar.gz
+# 1. Install Bob from Arch Extra
+pacman -S --noconfirm bob
+# 2. Use Bob to install and use the nightly version
+bob use nightly
+# 3. CRITICAL: Add Bob's bin to your path
+# Bob installs nvim to ~/.local/share/bob/nvim-bin/nvim
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+# Make it permanent for your shell
+echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"' >> ~/.zshrc
 
 echo "[4/5] Setting default shell to zsh..."
 if [[ "$SHELL" != "/bin/zsh" ]]; then

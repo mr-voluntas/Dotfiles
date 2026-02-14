@@ -1,0 +1,41 @@
+# --- General ---
+import = ["~/dotfiles/.config/alacritty/rasmus.toml"]
+
+[window]
+padding = { x = 0, y = 0 }
+dynamic_title = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+# --- Font ---
+[font]
+size = 18.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+# --- Bell ---
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+# --- Keybindings ---
+[[keyboard.bindings]]
+chars = "\u0003" # Standard Copy
+shortcut = "C"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0016" # Standard Paste
+shortcut = "V"
+mods = "Control|Shift"
+
+# Note: Alacritty handles scrolling with Shift+PageUp/Down by default. 
+# For J/K scrolling, most users prefer doing that inside Neovim or Tmux.

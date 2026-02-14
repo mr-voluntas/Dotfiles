@@ -1,13 +1,13 @@
 #!/bin/bash
 
 echo "[1/5] Updating system..."
-sudo pacman -Syu --noconfirm
+pacman -Syu --noconfirm
 
 echo "[2/5] Installing packages..."
-sudo pacman -S --noconfirm \
+pacman -S --noconfirm \
     zsh git zoxide \
     wl-clipboard ripgrep \
-    fzf fd tree man-db \
+    fzf fd tree man-db ncurses\
 
 echo "[3/5] Setting default shell to zsh..."
 if [[ "$SHELL" != "/bin/zsh" ]]; then
@@ -16,15 +16,12 @@ else
 echo "Zsh already set as default shell."
 fi
 
-echo "[4/5] Installing fonts..."
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
-mkdir -p ~/.local/share/fonts/JetBrainsMonoNF
-unzip JetBrainsMono.zip -d ~/.local/share/fonts/JetBrainsMonoNF
-rm -rf JetBrainsMono.zip
-fc-cache -fv
-
 echo "[5/5] Setting up dotfiles..."
-ln -sf .zshrc ~/.zshrc
-ln -sf .zprofile ~/.zprofile
-ln -sf .gitconfig ~/.gitconfig
-ln -sf .config/nvim ~/.config/nvim
+# Use $HOME to ensure we are pointing to the right place
+DOTFILES_DIR="$HOME/dotfiles"
+
+mkdir -p ~/.config
+ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+ln -sf "$DOTFILES_DIR/.zprofile" "$HOME/.zprofile"
+ln -sf "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+ln -sf "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"

@@ -1,3 +1,4 @@
+# 1. Standard Color Sections (Single Brackets)
 [colors.primary]
 background = "#22262D"
 foreground = "#C5C9C7"
@@ -9,6 +10,10 @@ cursor = "#C5C9C7"
 [colors.selection]
 text = "#C5C9C7"
 background = "#43464E"
+
+[colors.footer_bar]
+background = "#22262D"
+foreground = "#C5C9C7"
 
 [colors.normal]
 black   = "#22262D"
@@ -30,10 +35,11 @@ magenta = "#938AA9"
 cyan    = "#7AA89F"
 white   = "#C5C9C7"
 
-[colors.indexed]
-{ index = 16, color = "#b6927b" }
-{ index = 17, color = "#b98d7b" }
+# 2. Arrays (Double Brackets) - Keep these at the bottom!
+[[colors.indexed]]
+index = 16
+color = "#b6927b"
 
-[colors.footer_bar]
-background = "#22262D"
-foreground = "#C5C9C7"
+[[colors.indexed]]
+index = 17
+color = "#b98d7b"

@@ -24,20 +24,3 @@ export PATH="$HOME/.local/share/bob/bin:$HOME/.local/share/bob/nvim-bin:$PATH"
 # Install Neovim Nightly
 bob use nightly
 
-echo "4. Installing Starship..."
-if ! command -v starship &> /dev/null; then
-    curl -sS https://starship.rs/install.sh | sh -s -- -y
-fi
-
-echo "5. Finalizing Bash Config..."
-# Ensure essential paths and Starship are in .bashrc if not already symlinked
-if ! grep -q "starship init bash" "$HOME/.bashrc"; then
-    {
-        echo '# Environment Paths'
-        echo 'export PATH="$HOME/.local/share/bob/bin:$HOME/.local/share/bob/nvim-bin:$PATH"'
-        echo '# Starship Prompt'
-        echo 'eval "$(starship init bash)"'
-    } >> "$HOME/.bashrc"
-fi
-
-echo "Setup complete! Type 'source ~/.bashrc' to see changes."

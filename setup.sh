@@ -14,11 +14,7 @@ echo "[3/5] Installing NVIM 0.12..."
 pacman -S --noconfirm bob
 # 2. Use Bob to install and use the nightly version
 bob use nightly
-# 3. CRITICAL: Add Bob's bin to your path
-# Bob installs nvim to ~/.local/share/bob/nvim-bin/nvim
-export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
-# Make it permanent for your shell
-echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"' >> ~/.zshrc
+ln -s /root/.local/share/bob/nvim-bin/nvim /usr/local/bin/nvim
 
 echo "[4/5] Setting default shell to zsh..."
 if [[ "$SHELL" != "/bin/zsh" ]]; then

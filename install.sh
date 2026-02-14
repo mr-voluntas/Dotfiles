@@ -37,4 +37,6 @@ if [[ "$SHELL" != "/bin/zsh" ]]; then
     sudo chsh -s /bin/zsh $(whoami)
 fi
 
+zsh
+
 echo "Setup complete! Restart your shell or run 'zsh'."

@@ -11,7 +11,7 @@ ln -sf "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
 
 echo "Setting up NVIM..."
 # 1. Install Bob from Arch Extra
-pacman -S --noconfirm bob
+sudo apt-get -y bob
 # 2. Use Bob to install and use the nightly version
 bob use nightly
 ln -s /root/.local/share/bob/nvim-bin/nvim /usr/local/bin/nvim

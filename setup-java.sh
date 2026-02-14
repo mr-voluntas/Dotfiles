@@ -24,3 +24,9 @@ export JAVA_HOME=$JAVA_PATH
 export PATH=$JAVA_PATH/bin:$PATH
 java -version
 mvn -version
+
+echo "--- Installating jdtls dependencies ---"
+# python: for jdtls wrapper
+# unzip: for mason to extract downloads
+# lua-language-server: direct system install is often more stable in Arch
+pacman -S --noconfirm python unzip lua-language-server

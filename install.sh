@@ -33,4 +33,21 @@ if ! grep -q "bob/bin" "$HOME/.zshrc"; then
     } >> "$HOME/.zshrc"
 fi
 
+# ... (inside your base-setup.sh)
+
+echo "Installing Starship..."
+if ! command -v starship &> /dev/null; then
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+fi
+
+# Symlink the starship config
+mkdir -p ~/.config
+ln -sf "$DOTFILES_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
+
+# Ensure Bash uses Starship
+if ! grep -q "starship init bash" "$HOME/.bashrc"; then
+    echo 'eval "$(starship init bash)"' >> "$HOME/.bashrc"
+fi
+
+
 echo "Setup complete!"

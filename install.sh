@@ -21,9 +21,6 @@ fi
 # Add Bob to the path for THIS script session
 export PATH="$HOME/.local/share/bob/bin:$PATH"
 
-# Use Bob to install and use nightly
-bob use nightly
-
 echo "4. Finalizing shell..."
 # Add paths to .zshrc so they persist in future sessions
 {
@@ -38,5 +35,7 @@ if [[ "$SHELL" != "/bin/zsh" ]]; then
 fi
 
 zsh
+# Use Bob to install and use nightly
+bob use nightly
 
 echo "Setup complete! Restart your shell or run 'zsh'."

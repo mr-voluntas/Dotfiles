@@ -18,9 +18,6 @@ if [ ! -d "$HOME/.local/share/bob" ]; then
     curl -fsSL https://raw.githubusercontent.com/MordechaiHadad/bob/master/scripts/install.sh | bash
 fi
 
-# Update PATH for the REMAINDER of this script session
-export PATH="$HOME/.local/share/bob/bin:$HOME/.local/share/bob/nvim-bin:$PATH"
-
 # Install Neovim Nightly
 bob use nightly
 

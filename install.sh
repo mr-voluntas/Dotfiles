@@ -8,8 +8,8 @@ sudo apt-get install -y unzip curl ncurses-term wl-clipboard tree fd-find ripgre
 echo "2. Setting up symlinks..."
 DOTFILES_DIR="$HOME/dotfiles"
 mkdir -p ~/.config
-ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-ln -sf "$DOTFILES_DIR/.zprofile" "$HOME/.zprofile"
+ln -sf "$DOTFILES_DIR/.bashrc" "$HOME/.bashrc"
+#ln -sf "$DOTFILES_DIR/.zprofile" "$HOME/.zprofile"
 ln -sfn "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
 
 echo "3. Installing Bob & Neovim..."
@@ -31,11 +31,6 @@ if ! grep -q "bob/bin" "$HOME/.zshrc"; then
         echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"'
         echo 'export TERM=xterm-256color'
     } >> "$HOME/.zshrc"
-fi
-
-# Set ZSH as default
-if [[ "$SHELL" != "/bin/zsh" ]]; then
-    sudo chsh -s /bin/zsh $(whoami)
 fi
 
 echo "Setup complete!"

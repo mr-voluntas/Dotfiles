@@ -22,3 +22,5 @@ chsh -s /bin/zsh
 else
 echo "Zsh already set as default shell."
 fi
+
+export TERM=xterm-256color

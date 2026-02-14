@@ -1,15 +1,25 @@
 #!/bin/bash
 
-echo "[1/5] Updating system..."
+echo "[1/4] Updating system..."
 pacman -Syu --noconfirm
 
-echo "[2/5] Installing packages..."
+echo "[2/4] Installing packages..."
 pacman -S --noconfirm \
     zsh git zoxide \
     wl-clipboard ripgrep \
     fzf fd tree man-db ncurses kitty-terminfo\
 
-echo "[3/5] Setting default shell to zsh..."
+echo "[3/4] Installing NVIM..."
+# Install dependencies needed for Neovim 0.12
+pacman -S --noconfirm curl tar fuse
+# Download the nightly AppImage (which is the 0.12 build)
+curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+# Extract it to /usr/local
+tar -C /usr/local --strip-components 1 -xzf nvim-linux64.tar.gz
+# Clean up
+rm nvim-linux64.tar.gz 
+
+echo "[4/4] Setting default shell to zsh..."
 if [[ "$SHELL" != "/bin/zsh" ]]; then
 chsh -s /bin/zsh
 else

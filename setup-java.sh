@@ -4,12 +4,12 @@ set -e
 echo "--- Installing Java 17 and Maven ---"
 # jdk17-openjdk is the current Long Term Support (LTS) version
 # maven is the standard build tool
-pacman -S --noconfirm jdk17-openjdk maven
+pacman -S --noconfirm jdk21-openjdk maven
 
 echo "--- Configuring Environment ---"
 # Arch installs Java to a specific versioned path. 
 # We link it to a generic path or export it directly.
-JAVA_PATH="/usr/lib/jvm/java-17-openjdk"
+JAVA_PATH="/usr/lib/jvm/java-21-openjdk"
 
 # Update .zshrc so Maven and Java are always linked
 {
